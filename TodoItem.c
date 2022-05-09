@@ -1,6 +1,9 @@
+#ifndef TodoItem_H
+#define TodoItem_H
+
 #include <stdlib.h>
-#ifndef PARSER_H  // header guard
-#define PARSER_H
+#include <string.h>
+#include "debug.c"
 
 typedef struct TodoItem {
     char* text;
@@ -8,12 +11,17 @@ typedef struct TodoItem {
 
 TodoItem new_TodoItem(char* text) {
     TodoItem item = (TodoItem) malloc(sizeof(struct TodoItem));
-    item->text = text; // TODO copy the string instead of assigning it here
+    item->text = strdup(text);
     return item;
+}
+
+void TodoItem_free(TodoItem this) {
+    free(this->text);
+    free(this);
 }
 
 char* TodoItem_getText(TodoItem this) {
     return this->text;
 }
 
-#endif // PARSER_H
+#endif
